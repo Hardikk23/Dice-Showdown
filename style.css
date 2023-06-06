@@ -173,8 +173,13 @@ main {
     align-items: center;
     justify-content: center;
   }
-  .main {
+  main {
     display: flex;
     flex-direction: column;
+  }
+  .player {
+    flex: none;
+    width: 100%;
+    padding: 4rem;
   }
 }
