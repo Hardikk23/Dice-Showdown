@@ -10,6 +10,32 @@ const btnNew = document.querySelector(".btn-new");
 const btnRoll = document.querySelector(".btn-roll");
 const btnHold = document.querySelector(".btn-hold");
 
+const audio = document.createElement("audio");
+audio.src = "diceSound.mp3";
+audio.volume = 0.5;
+const audio1 = document.createElement("audio");
+audio1.src = "music.mp3";
+audio1.volume = 0.5;
+const audio2 = document.createElement("audio");
+audio2.src = "new.mp3";
+audio2.volume = 0.5;
+const audio3 = document.createElement("audio");
+audio3.src = "hold.wav";
+audio3.volume = 0.5;
+
+const container = document.getElementById("fireworks-container");
+const fireworks = new Fireworks(container);
+function winningAnimation() {
+  audio1.play();
+  setTimeout(() => {
+    audio1.pause();
+  }, 10000);
+  fireworks.start();
+  setTimeout(() => {
+    fireworks.stop();
+  }, 10000);
+}
+
 let num,
   currentScore = 0,
   playerActive = 0,
@@ -24,6 +50,13 @@ function newGame() {
   document.querySelector(".player-1").classList.remove("player-active");
   score0.textContent = 0;
   score1.textContent = 0;
+  current0.textContent = 0;
+  current1.textContent = 0;
+  dice.classList.add("hidden");
+  audio1.pause();
+  audio1.currentTime = 0;
+  audio2.play();
+  fireworks.stop();
 }
 function switchPlayer() {
   if (playerActive === 1) {
@@ -44,6 +77,7 @@ function switchPlayer() {
 }
 
 function rollDice() {
+  audio.play();
   num = Math.trunc(Math.random() * 6) + 1;
   dice.src = `dice${num}.png`;
   dice.classList.remove("hidden");
@@ -57,23 +91,6 @@ function rollDice() {
 }
 
 function hold() {
-  if (score[0] > 100) {
-    document.querySelector(".player-0").classList.add("player-winner");
-    btnHold.disabled = true;
-    btnRoll.disabled = true;
-    // winningAnimation();
-    return;
-  } else if (score[1] > 100) {
-    audio.play();
-    setTimeout(() => {
-      audio.pause();
-    }, 10000);
-    document.querySelector(".player-1").classList.add("player-winner");
-    btnHold.disabled = true;
-    btnRoll.disabled = true;
-    // winningAnimation();
-    return;
-  }
   if (playerActive === 1) {
     score[1] = score[1] + currentScore;
     document.getElementById(`score-1`).textContent = score[1];
@@ -97,13 +114,16 @@ function hold() {
     document.querySelector(".player-0").classList.add("player-winner");
     btnHold.disabled = true;
     btnRoll.disabled = true;
+    winningAnimation();
     return;
   } else if (score[1] > 100) {
     document.querySelector(".player-1").classList.add("player-winner");
     btnHold.disabled = true;
     btnRoll.disabled = true;
+    winningAnimation();
     return;
   }
+  audio3.play();
 }
 
 btnRoll.addEventListener("click", rollDice);
