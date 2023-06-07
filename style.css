@@ -191,21 +191,21 @@ main {
     position: relative;
   }
   .btn {
-    width: 29%;
+    width: 25%;
     position: absolute;
   }
 
   .btn-new {
-    top: 35%;
+    top: 30%;
   }
   .btn-roll {
     top: 50%;
   }
   .btn-hold {
-    top: 65%;
+    top: 70%;
   }
   .dice {
-    top: 23%;
+    top: 20%;
     height: 6rem;
   }
 }
