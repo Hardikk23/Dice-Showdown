@@ -86,6 +86,7 @@ function rollDice() {
     document.getElementById(`current-${playerActive}`).textContent =
       currentScore;
   } else {
+    audio3.play();
     switchPlayer();
   }
 }
